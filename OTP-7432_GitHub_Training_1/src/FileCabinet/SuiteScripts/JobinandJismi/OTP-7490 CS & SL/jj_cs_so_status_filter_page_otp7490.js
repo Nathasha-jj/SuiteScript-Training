@@ -3,6 +3,23 @@
  * @NScriptType ClientScript
  * @NModuleScope SameAccount
  */
+/*
+ * Jobin and Jismi IT Services LLP
+ *
+ * ${OTP-7490} : ${Custom page for display sales order based on the status}
+ *
+ 
+ *
+ * Author: Jobin & Jismi
+ *
+ * Date Created : 6-August-2024
+ *
+ * Description :This script is to create a custom form that will display sales orders which need to be fulfilled or billed based on the filters. 
+ *
+ * REVISION HISTORY
+ *
+ * @version 1.0 OTP-7490 : 6-August-2024 
+ */
 define(['N/currentRecord', 'N/record', 'N/search','N/url'],
 /**
  * @param{currentRecord} currentRecord
