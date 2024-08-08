@@ -25,7 +25,7 @@ define(['N/record'],
                 id: 23,
                 values:
                 {
-                    'salesrep' : 25
+                    'salesrep' : 31
                 }
             });
         }
