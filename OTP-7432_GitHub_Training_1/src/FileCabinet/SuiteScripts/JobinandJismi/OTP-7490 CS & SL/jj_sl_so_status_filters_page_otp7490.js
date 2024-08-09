@@ -348,7 +348,7 @@ define(['N/record', 'N/search', 'N/ui/serverWidget'],
                         soSublist.setSublistValue({
                             id: 'custpage_tax',
                             line: i,
-                            value: result.getValue('taxamount') || null
+                            value: result.getValue('taxamount') || '0.00'
                         });
                         soSublist.setSublistValue({
                             id: 'custpage_total',
