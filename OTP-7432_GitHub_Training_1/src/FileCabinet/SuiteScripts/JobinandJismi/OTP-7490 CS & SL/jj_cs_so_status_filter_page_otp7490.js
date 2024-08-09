@@ -55,51 +55,59 @@ function(currentRecord, record, search, url) {
      */
     function fieldChanged(scriptContext) 
     {
-        let currentRecord = scriptContext.currentRecord;
-        console.log(currentRecord);
-        let fieldId = scriptContext.fieldId;
-        console.log("Field Id",fieldId);
-        // let statusFilter = '';
-        // let customerFilter = '';
-        // let subsidiaryFilter = '';
-        // let departmentFilter = '';
-
-        let statusFilter = currentRecord.getValue('custpage_status');
-        let customerFilter = currentRecord.getValue('custpage_customer');
-        let subsidiaryFilter = currentRecord.getValue('custpage_subsidiary');
-        let departmentFilter = currentRecord.getValue('custpage_department');
-        // if(fieldId =='custpage_status')
-        // {
-        //     statusFilter=currentRecord.getValue('custpage_status'); // If we need to set single filter at a time
-        // }
-        // if(fieldId =='custpage_customer')
-        // {
-        //     customerFilter=currentRecord.getValue('custpage_customer');
-        // }
-        // if(fieldId =='custpage_subsidiary')
-        // {
-        //     subsidiaryFilter=currentRecord.getValue('custpage_subsidiary');
-        // }
-        // if(fieldId =='custpage_department')
-        // {
-        //     departmentFilter=currentRecord.getValue('custpage_department');
-        // }
-
-        if(fieldId=='custpage_status'||'custpage_customer'||'custpage_subsidiary'||'custpage_department')
+        try
         {
-            document.location = url.resolveScript(
+            let currentRecord = scriptContext.currentRecord;
+            console.log(currentRecord);
+            let fieldId = scriptContext.fieldId;
+            console.log("Field Id",fieldId);
+            // let statusFilter = '';
+            // let customerFilter = '';
+            // let subsidiaryFilter = '';
+            // let departmentFilter = '';
+
+            let statusFilter = currentRecord.getValue('custpage_status');
+            let customerFilter = currentRecord.getValue('custpage_customer');
+            let subsidiaryFilter = currentRecord.getValue('custpage_subsidiary');
+            let departmentFilter = currentRecord.getValue('custpage_department');
+            // if(fieldId =='custpage_status')
+            // {
+            //     statusFilter=currentRecord.getValue('custpage_status'); // If we need to set single filter at a time
+            // }
+            // if(fieldId =='custpage_customer')
+            // {
+            //     customerFilter=currentRecord.getValue('custpage_customer');
+            // }
+            // if(fieldId =='custpage_subsidiary')
+            // {
+            //     subsidiaryFilter=currentRecord.getValue('custpage_subsidiary');
+            // }
+            // if(fieldId =='custpage_department')
+            // {
+            //     departmentFilter=currentRecord.getValue('custpage_department');
+            // }
+
+            if(fieldId=='custpage_status'||'custpage_customer'||'custpage_subsidiary'||'custpage_department')
             {
-                deploymentId: 'customdeploy_jj_sl_so_filterpage_otp7490',
-                scriptId: 'customscript_jj_sl_so_filterpage_otp7490',
-                params: 
+                document.location = url.resolveScript(
                 {
-                    statusValue: statusFilter||'',
-                    customerValue: customerFilter||'',
-                    subsidiaryValue: subsidiaryFilter||'',
-                    departmentValue: departmentFilter||''
-                }
-            });
+                    deploymentId: 'customdeploy_jj_sl_so_filterpage_otp7490',
+                    scriptId: 'customscript_jj_sl_so_filterpage_otp7490',
+                    params: 
+                    {
+                        statusValue: statusFilter||'',
+                        customerValue: customerFilter||'',
+                        subsidiaryValue: subsidiaryFilter||'',
+                        departmentValue: departmentFilter||''
+                    }
+                });
+            }
         }
+        catch(e)
+        {
+            log.error("Error",e.message);
+        }
+        
     }
 
     /**
