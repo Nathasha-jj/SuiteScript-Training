@@ -20,13 +20,13 @@
  *
  * @version 1.0 OTP-7490 : 6-August-2024 
  */
-define(['N/currentRecord', 'N/record', 'N/search','N/url'],
+define(['N/currentRecord', 'N/record','N/url'],
 /**
  * @param{currentRecord} currentRecord
  * @param{record} record
  * @param{search} search
  */
-function(currentRecord, record, search, url) {
+function(currentRecord, record, url) {
     
     /**
      * Function to be executed after page is initialized.
