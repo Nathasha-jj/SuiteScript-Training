@@ -19,15 +19,12 @@
  *
  * @version 1.0 OTP-7497 : 1-August-2024 
  */
-define(['N/email', 'N/record', 'N/search','N/ui/serverWidget','N/runtime'],
+define(['N/email', 'N/record'],
     /**
  * @param{email} email
  * @param{record} record
- * @param{search} search
- * @param{serverWidget} serverWidget 
- * @param{runtime} runtime 
  */
-    (email, record, search,serverWidget,runtime) => {
+    (email, record) => {
         /**
          * Defines the function definition that is executed before record is loaded.
          * @param {Object} scriptContext
@@ -39,18 +36,25 @@ define(['N/email', 'N/record', 'N/search','N/ui/serverWidget','N/runtime'],
          */
         const beforeLoad = (scriptContext) => 
         {
-            if(scriptContext.type == scriptContext.UserEventType.VIEW)
+            try
             {
-                let newrecord = scriptContext.newRecord;
-                log.debug('New Record', newrecord);
-                let salesOrderId = newrecord.id;
-                log.debug('Sales Order Id', salesOrderId);
-                let holdFulfillment = newrecord.getValue('custbody_jj_hold_fulfillment_1');
-                log.debug("Hold Fulfillment", holdFulfillment);
-                if(holdFulfillment == true)
+                if(scriptContext.type == scriptContext.UserEventType.VIEW)
                 {
-                    scriptContext.form.removeButton('process');
+                    let newrecord = scriptContext.newRecord;
+                    log.debug('New Record', newrecord);
+                    let salesOrderId = newrecord.id;
+                    log.debug('Sales Order Id', salesOrderId);
+                    let holdFulfillment = newrecord.getValue('custbody_jj_hold_fulfillment_1');
+                    log.debug("Hold Fulfillment", holdFulfillment);
+                    if(holdFulfillment == true)
+                    {
+                        scriptContext.form.removeButton('process');
+                    }
                 }
+            }
+            catch(e)
+            {
+                log.error("Error",e.message);
             }
         }
 
@@ -64,29 +68,36 @@ define(['N/email', 'N/record', 'N/search','N/ui/serverWidget','N/runtime'],
          */
         const beforeSubmit = (scriptContext) => 
         {
-            if(scriptContext.type == scriptContext.UserEventType.CREATE)
+            try
             {
-                let newrecord = scriptContext.newRecord;
-                log.debug('New Record', newrecord);
-                let salesOrderId = newrecord.id;
-                log.debug('Sales Order Id', salesOrderId);
-                let holdFulfillment = newrecord.getValue('custbody_jj_hold_fulfillment_1');
-                log.debug("Hold Fulfillment", holdFulfillment);
-                let salesrepId = newrecord.getValue('salesrep');
-                log.debug("Sales Rep", salesrepId);
-                let currentUser = runtime.getCurrentUser();
-                let authorId = currentUser.id;
-                log.debug('Author Id',authorId);
-                if(holdFulfillment == true)
+                if(scriptContext.type == scriptContext.UserEventType.CREATE)
                 {
-                    email.send(
+                    let newrecord = scriptContext.newRecord;
+                    log.debug('New Record', newrecord);
+                    let salesOrderId = newrecord.id;
+                    log.debug('Sales Order Id', salesOrderId);
+                    let holdFulfillment = newrecord.getValue('custbody_jj_hold_fulfillment_1');
+                    log.debug("Hold Fulfillment", holdFulfillment);
+                    let salesrepId = newrecord.getValue('salesrep');
+                    log.debug("Sales Rep", salesrepId);
+                    let currentUser = runtime.getCurrentUser();
+                    let authorId = currentUser.id;
+                    log.debug('Author Id',authorId);
+                    if(holdFulfillment == true)
                     {
-                        author: authorId,
-                        recipients: salesrepId,
-                        subject: "Hold Fulfillment",
-                        body: 'Holding the fulfillment of the item since the checkbox is checked'
-                    });
+                        email.send(
+                        {
+                            author: authorId,
+                            recipients: salesrepId,
+                            subject: "Hold Fulfillment",
+                            body: 'Holding the fulfillment of the item since the checkbox is checked'
+                        });
+                    }
                 }
+            }
+            catch(e)
+            {
+                log.error("Error",e.message);
             }
         }
 
@@ -98,11 +109,11 @@ define(['N/email', 'N/record', 'N/search','N/ui/serverWidget','N/runtime'],
          * @param {string} scriptContext.type - Trigger type; use values from the context.UserEventType enum
          * @since 2015.2
          */
-        const afterSubmit = (scriptContext) => 
-        {
+        // const afterSubmit = (scriptContext) => 
+        // {
 
-        }
+        // }
 
-        return {beforeLoad, beforeSubmit, afterSubmit}
+        return {beforeLoad, beforeSubmit}
 
     });
