@@ -37,9 +37,11 @@ function(currentRecord, record, url) {
      *
      * @since 2015.2
      */
-    // function pageInit(scriptContext) {
+    function pageInit(scriptContext) 
+    {
+        window.onbeforeunload = null;
 
-    // }
+    }
 
     /**
      * Function to be executed when field is changed.
