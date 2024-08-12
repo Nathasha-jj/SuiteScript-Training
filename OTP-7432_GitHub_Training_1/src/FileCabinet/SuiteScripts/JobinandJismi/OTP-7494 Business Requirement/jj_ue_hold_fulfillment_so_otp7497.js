@@ -19,10 +19,11 @@
  *
  * @version 1.0 OTP-7497 : 1-August-2024 
  */
-define(['N/email', 'N/record'],
+define(['N/email', 'N/record','N/runtime'],
     /**
  * @param{email} email
  * @param{record} record
+ * @param{runtime} runtime
  */
     (email, record) => {
         /**
