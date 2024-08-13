@@ -9,7 +9,7 @@
  *
  
  *
- * Author: Jobin & Jismi
+ * Author: Jobin & Jismi IT Services LLP
  *
  * Date Created : 1-August-2024
  *
@@ -37,9 +37,9 @@ define(['N/email', 'N/record', 'N/runtime','N/ui/serverWidget','N/ui/message'],
          * @param {ServletRequest} scriptContext.request - HTTP request information sent from the browser for a client action only.
          * @since 2015.2
          */
-        const beforeLoad = (scriptContext) => {
+        // const beforeLoad = (scriptContext) => {
 
-        }
+        // }
 
         /**
          * Defines the function definition that is executed before record is submitted.
@@ -49,10 +49,10 @@ define(['N/email', 'N/record', 'N/runtime','N/ui/serverWidget','N/ui/message'],
          * @param {string} scriptContext.type - Trigger type; use values from the context.UserEventType enum
          * @since 2015.2
          */
-        const beforeSubmit = (scriptContext) => 
-        {
+        // const beforeSubmit = (scriptContext) => 
+        // {
             
-        }
+        // }
 
         /**
          * Defines the function definition that is executed after record is submitted.
@@ -64,43 +64,50 @@ define(['N/email', 'N/record', 'N/runtime','N/ui/serverWidget','N/ui/message'],
          */
         const afterSubmit = (scriptContext) => 
         {
-            if(scriptContext.type !== scriptContext.UserEventType.CREATE)
+            try
             {
-                return;
-            }
-            let newrecord = scriptContext.newRecord;
-            log.debug('New Record', newrecord);
-            let salesOrderId = newrecord.id;
-            log.debug('Sales Order Id', salesOrderId);
-            let customerId = newrecord.getValue('entity');
-            log.debug("Customer", customerId);
-            let customerName = newrecord.getText('entity');
-            log.debug("Customer", customerName);
-            let salesrepId = newrecord.getValue('salesrep');
-            log.debug("Sales Rep", salesrepId);
-            let currentUser = runtime.getCurrentUser();
-            let authorId = currentUser.id;
-            log.debug('Author Id',authorId);
-            let objRecCustomer = record.load(
-            {
-                type: record.Type.CUSTOMER,
-                id: customerId
-            });
-            let overdueAmount = objRecCustomer.getValue('overduebalance');
-            log.debug("OverDue Amount", overdueAmount);
-            let emailBody = '<html><body><a href= https://td2924623.app.netsuite.com/app/accounting/transactions/salesord.nl?id='+salesOrderId+'&whence=>'+'Click Here to view the created Sales Order'+'</body></html>';
-            if(overdueAmount > 0)
-            {
-                email.send(
+                if(scriptContext.type !== scriptContext.UserEventType.CREATE)
                 {
-                    author: authorId,
-                    recipients: salesrepId,
-                    subject: "Sales Order Created for Customer with Overdue",
-                    body: 'Salesorder has been created for the customer: ' + customerName + ' with overdue amount: ' + overdueAmount +'<br/>'+ emailBody 
+                    return;
+                }
+                let newrecord = scriptContext.newRecord;
+                log.debug('New Record', newrecord);
+                let salesOrderId = newrecord.id;
+                log.debug('Sales Order Id', salesOrderId);
+                let customerId = newrecord.getValue('entity');
+                log.debug("Customer", customerId);
+                let customerName = newrecord.getText('entity');
+                log.debug("Customer", customerName);
+                let salesrepId = newrecord.getValue('salesrep');
+                log.debug("Sales Rep", salesrepId);
+                let currentUser = runtime.getCurrentUser();
+                let authorId = currentUser.id;
+                log.debug('Author Id',authorId);
+                let objRecCustomer = record.load(
+                {
+                    type: record.Type.CUSTOMER,
+                    id: customerId
                 });
+                let overdueAmount = objRecCustomer.getValue('overduebalance');
+                log.debug("OverDue Amount", overdueAmount);
+                let emailBody = '<html><body><a href= https://td2924623.app.netsuite.com/app/accounting/transactions/salesord.nl?id='+salesOrderId+'&whence=>'+'Click Here to view the created Sales Order'+'</body></html>';
+                if(overdueAmount > 0)
+                {
+                    email.send(
+                    {
+                        author: authorId,
+                        recipients: salesrepId,
+                        subject: "Sales Order Created for Customer with Overdue",
+                        body: 'Salesorder has been created for the customer: ' + customerName + ' with overdue amount: ' + overdueAmount +'<br/>'+ emailBody 
+                    });
+                }
+            }
+            catch(e)
+            {
+                log.error("Error",e.message);
             }
         }
 
-        return {beforeLoad, beforeSubmit, afterSubmit}
+        return {afterSubmit}
 
     });
