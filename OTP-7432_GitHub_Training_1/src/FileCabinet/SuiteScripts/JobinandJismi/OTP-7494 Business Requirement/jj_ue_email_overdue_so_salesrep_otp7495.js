@@ -19,13 +19,11 @@
  *
  * @version 1.0 OTP-7495 : 1-August-2024 
  */
-define(['N/email', 'N/record', 'N/runtime','N/ui/serverWidget','N/ui/message'],
+define(['N/email', 'N/record', 'N/runtime'],
     /**
  * @param{email} email
  * @param{record} record
  * @param{runtime} runtime
- * @param{runtime} serverWidget 
- * @param{runtime} message 
  */
     (email, record, runtime, serverwidget,message) => {
         /**
