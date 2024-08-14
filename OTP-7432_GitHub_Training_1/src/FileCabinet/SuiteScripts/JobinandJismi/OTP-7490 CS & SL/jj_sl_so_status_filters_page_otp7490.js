@@ -9,7 +9,7 @@
  *
  
  *
- * Author: Jobin & Jismi
+ * Author: Jobin & Jismi IT Services LLP
  *
  * Date Created : 6-August-2024
  *
@@ -274,7 +274,7 @@ define(['N/record', 'N/search', 'N/ui/serverWidget'],
                     }
                     if(customer)
                     {
-                        filter.push('AND', ['entity', 'anyof', customer]);
+                        filter.push('AND', ['customermain.internalid', 'anyof', customer]);
                     }
                     if(subsidiary)
                     {
