@@ -1,0 +1,25 @@
+<suitelet scriptid="customscript_jj_sl_so_filterpage_otp7490">
+  <description></description>
+  <isinactive>F</isinactive>
+  <name>JJ SL SO Sublist Filter Page OTP7490</name>
+  <notifyadmins>F</notifyadmins>
+  <notifyemails></notifyemails>
+  <notifyowner>T</notifyowner>
+  <notifyuser>F</notifyuser>
+  <scriptfile>[/SuiteScripts/JobinandJismi/OTP-7490 CS &amp; SL/jj_sl_so_status_filters_page_otp7490.js]</scriptfile>
+  <scriptdeployments>
+    <scriptdeployment scriptid="customdeploy_jj_sl_so_filterpage_otp7490">
+      <allemployees>T</allemployees>
+      <allpartners>T</allpartners>
+      <allroles>T</allroles>
+      <audslctrole></audslctrole>
+      <eventtype></eventtype>
+      <isdeployed>T</isdeployed>
+      <isonline>F</isonline>
+      <loglevel>DEBUG</loglevel>
+      <runasrole></runasrole>
+      <status>RELEASED</status>
+      <title>JJ SL SO Sublist Filter Page OTP7490</title>
+    </scriptdeployment>
+  </scriptdeployments>
+</suitelet>
