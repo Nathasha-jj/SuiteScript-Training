@@ -9,7 +9,7 @@
  *
  
  *
- * Author: Jobin & Jismi
+ * Author: Jobin & Jismi IT Services LLP
  *
  * Date Created : 1-August-2024
  *
@@ -19,13 +19,11 @@
  *
  * @version 1.0 OTP-7497 : 1-August-2024 
  */
-define(['N/email', 'N/record','N/runtime'],
+define(['N/record'],
     /**
- * @param{email} email
  * @param{record} record
- * @param{runtime} runtime
  */
-    (email, record) => {
+    (record) => {
         /**
          * Defines the function definition that is executed before record is loaded.
          * @param {Object} scriptContext
@@ -39,60 +37,23 @@ define(['N/email', 'N/record','N/runtime'],
         {
             try
             {
+                // if(scriptContext.type == scriptContext.UserEventType.VIEW)
+                // {
+                let newrecord = scriptContext.newRecord;
+                log.debug('New Record Load 1', newrecord);
+                let salesOrderId = newrecord.id;
+                log.debug('Sales Order Id', salesOrderId);
+                let holdFulfillment = newrecord.getValue('custbody_jj_hold_fulfillment');
+                log.debug("Hold Fulfillment", holdFulfillment);
                 if(scriptContext.type == scriptContext.UserEventType.VIEW)
                 {
-                    let newrecord = scriptContext.newRecord;
-                    log.debug('New Record', newrecord);
-                    let salesOrderId = newrecord.id;
-                    log.debug('Sales Order Id', salesOrderId);
-                    let holdFulfillment = newrecord.getValue('custbody_jj_hold_fulfillment_1');
-                    log.debug("Hold Fulfillment", holdFulfillment);
                     if(holdFulfillment == true)
                     {
                         scriptContext.form.removeButton('process');
                     }
-                }
-            }
-            catch(e)
-            {
-                log.error("Error",e.message);
-            }
-        }
-
-        /**
-         * Defines the function definition that is executed before record is submitted.
-         * @param {Object} scriptContext
-         * @param {Record} scriptContext.newRecord - New record
-         * @param {Record} scriptContext.oldRecord - Old record
-         * @param {string} scriptContext.type - Trigger type; use values from the context.UserEventType enum
-         * @since 2015.2
-         */
-        const beforeSubmit = (scriptContext) => 
-        {
-            try
-            {
-                if(scriptContext.type == scriptContext.UserEventType.CREATE)
-                {
-                    let newrecord = scriptContext.newRecord;
-                    log.debug('New Record', newrecord);
-                    let salesOrderId = newrecord.id;
-                    log.debug('Sales Order Id', salesOrderId);
-                    let holdFulfillment = newrecord.getValue('custbody_jj_hold_fulfillment_1');
-                    log.debug("Hold Fulfillment", holdFulfillment);
-                    let salesrepId = newrecord.getValue('salesrep');
-                    log.debug("Sales Rep", salesrepId);
-                    let currentUser = runtime.getCurrentUser();
-                    let authorId = currentUser.id;
-                    log.debug('Author Id',authorId);
-                    if(holdFulfillment == true)
+                    else
                     {
-                        email.send(
-                        {
-                            author: authorId,
-                            recipients: salesrepId,
-                            subject: "Hold Fulfillment",
-                            body: 'Holding the fulfillment of the item since the checkbox is checked'
-                        });
+                        return true;
                     }
                 }
             }
@@ -101,20 +62,6 @@ define(['N/email', 'N/record','N/runtime'],
                 log.error("Error",e.message);
             }
         }
-
-        /**
-         * Defines the function definition that is executed after record is submitted.
-         * @param {Object} scriptContext
-         * @param {Record} scriptContext.newRecord - New record
-         * @param {Record} scriptContext.oldRecord - Old record
-         * @param {string} scriptContext.type - Trigger type; use values from the context.UserEventType enum
-         * @since 2015.2
-         */
-        // const afterSubmit = (scriptContext) => 
-        // {
-
-        // }
-
-        return {beforeLoad, beforeSubmit}
+        return {beforeLoad}
 
     });
