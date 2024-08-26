@@ -1,0 +1,22 @@
+<restlet scriptid="customscript_jj_rl_invoice_pdf_raf">
+  <description></description>
+  <isinactive>F</isinactive>
+  <name>JJ RL Invoice Pdf Raf</name>
+  <notifyadmins>F</notifyadmins>
+  <notifyemails></notifyemails>
+  <notifyowner>T</notifyowner>
+  <notifyuser>F</notifyuser>
+  <scriptfile>[/SuiteScripts/JobinandJismi/OTP-7432 RESTLet 1/jj_rl_invoice_pdf_raf_1.js]</scriptfile>
+  <scriptdeployments>
+    <scriptdeployment scriptid="customdeploy_jj_rl_invoice_pdf_raf">
+      <allemployees>T</allemployees>
+      <allpartners>F</allpartners>
+      <allroles>T</allroles>
+      <audslctrole></audslctrole>
+      <isdeployed>T</isdeployed>
+      <loglevel>DEBUG</loglevel>
+      <status>RELEASED</status>
+      <title>JJ RL Invoice Pdf Raf</title>
+    </scriptdeployment>
+  </scriptdeployments>
+</restlet>
