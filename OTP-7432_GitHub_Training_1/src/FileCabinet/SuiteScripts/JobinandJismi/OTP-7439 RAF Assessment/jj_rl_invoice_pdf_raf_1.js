@@ -66,7 +66,6 @@ define(['N/file', 'N/record', 'N/render', 'N/search','N/https'],
                     {
                         entityId: invId,
                         printMode: render.PrintMode.PDF,
-                        inCustLocale: false
                     });
                     let fileName = "Invoice_"+documentNo;
                     let fileObj = file.create(
@@ -78,14 +77,11 @@ define(['N/file', 'N/record', 'N/render', 'N/search','N/https'],
                     });
                     let fileId = fileObj.save();
                     log.debug("File Id", fileId);
-                    let pdfContents = invoicePdf.getContents();
-                    let invurl = render.PDFtoURL;
-                    // let invurl = serverResponse.renderPDF(
-                    // {
-                    //     xmlString : pdfContents
-                    // });
+                    let pdfurl = file.load({
+                        id: fileId
+                    });
                     let invoiceLocUrl = 'https://td2933495.app.netsuite.com/app/common/media/mediaitemfolders.nl?folder=28&whence=';
-                    let returnvalue = { "recordName":"Invoice", "documentNo: ": documentNo,"Invoice File Name":fileName, "INVOICE PDF URL": invoiceLocUrl}
+                    let returnvalue = { "recordName":"Invoice", "documentNo: ": documentNo,"Invoice File Name":fileName, "Invoice PDF Location URL": invoiceLocUrl}
                     return returnvalue
                 }
                 else
